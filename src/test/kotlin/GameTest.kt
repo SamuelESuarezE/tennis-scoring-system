@@ -13,4 +13,15 @@ class GameTest {
 
         assertEquals("0-0", match.getScore(), "Expected initial score to be 0-0, but got '${match.getScore()}'")
     }
+
+    @Test
+    fun `given two players, when both have 40, then game enters Deuce`() {
+        val playerOne = Player()
+        val playerTwo = Player()
+        val match = Game(playerOne, playerTwo)
+        repeat(3) { match.playerWinsAPoint(1) }
+        repeat(3) { match.playerWinsAPoint(2) }
+
+        assertEquals("Deuce", match.getScore(), "Match score should be 'Deuce' but was '${match.getScore()}'")
+    }
 }
