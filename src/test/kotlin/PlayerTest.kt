@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class PlayerTest {
 
     @Test
-    fun `Player should win a point and increase score`() {
+    fun `given a player, when a point is won, then score increases by 15`() {
         val player = Player()
         player.winsAPoint()
 
@@ -14,7 +14,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `Player score progresses as 0, 15, 30 and 40`() {
+    fun `given a player, when they win multiple points, then their score progresses as 0, 15, 30 and 40`() {
         val player = Player()
         assertEquals(0, player.getScore(), "Initial score must be 0 (Love)")
         player.winsAPoint()
