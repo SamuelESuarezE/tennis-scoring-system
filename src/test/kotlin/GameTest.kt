@@ -2,6 +2,7 @@ import model.Game
 import model.Player
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class GameTest {
 
@@ -19,8 +20,8 @@ class GameTest {
         val playerOne = Player()
         val playerTwo = Player()
         val match = Game(playerOne, playerTwo)
-        repeat(3) { match.playerWinsAPoint(1) }
-        repeat(3) { match.playerWinsAPoint(2) }
+        repeat(3) { match.playerWinsAPoint(playerOne) }
+        repeat(3) { match.playerWinsAPoint(playerTwo) }
 
         assertEquals("Deuce", match.getScore(), "Expected score to be 'Deuce', but got '${match.getScore()}'")
     }
@@ -30,10 +31,10 @@ class GameTest {
         val playerOne = Player()
         val playerTwo = Player()
         val match = Game(playerOne, playerTwo)
-        repeat(3) { match.playerWinsAPoint(1) }
-        repeat(4) { match.playerWinsAPoint(2) }
+        repeat(3) { match.playerWinsAPoint(playerOne) }
+        repeat(4) { match.playerWinsAPoint(playerTwo) }
 
-        assertEquals("Advantage Player 2", match.getScore(), "Expected score to be 'Advantage Player 2', but got '${match.getScore()}'")
+        assertEquals("Advantage Player 2", match.getScore(), "Expected score to be 'Advantage Player playerTwo', but got '${match.getScore()}'")
     }
 
     @Test
@@ -41,9 +42,9 @@ class GameTest {
         val playerOne = Player()
         val playerTwo = Player()
         val match = Game(playerOne, playerTwo)
-        repeat(3) { match.playerWinsAPoint(1) }
-        repeat(4) { match.playerWinsAPoint(2) }
-        match.playerWinsAPoint(1)
+        repeat(3) { match.playerWinsAPoint(playerOne) }
+        repeat(4) { match.playerWinsAPoint(playerTwo) }
+        match.playerWinsAPoint(playerOne)
 
         assertEquals("Deuce", match.getScore(), "Expected score to be 'Deuce', but got '${match.getScore()}'")
     }
@@ -53,9 +54,21 @@ class GameTest {
         val playerOne = Player()
         val playerTwo = Player()
         val match = Game(playerOne, playerTwo)
-        repeat(3) { match.playerWinsAPoint(1) }
-        repeat(5) { match.playerWinsAPoint(2) }
+        repeat(3) { match.playerWinsAPoint(playerOne) }
+        repeat(5) { match.playerWinsAPoint(playerTwo) }
 
-        assertEquals("Player 2 wins the match!", match.getScore(), "Expected score to be 'Player 2 wins the match!', but got '${match.getScore()}'")
+        assertEquals("Player 2 wins the match!", match.getScore(), "Expected score to be 'Player playerTwo wins the match!', but got '${match.getScore()}'")
+    }
+
+    @Test
+    fun `when a non-participating player wins a point, then and exception is thrown`() {
+        val playerOne = Player()
+        val playerTwo = Player()
+        val match = Game(playerOne, playerTwo)
+        val anotherPlayer = Player()
+
+        assertFailsWith<IllegalArgumentException>("Should throw if player not in match") {
+            match.playerWinsAPoint(anotherPlayer)
+        }
     }
 }

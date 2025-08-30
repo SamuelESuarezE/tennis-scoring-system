@@ -21,20 +21,12 @@ class Game(
         else "${playerOne.getScore()}-${playerTwo.getScore()}"
     }
 
-    fun playerWinsAPoint(number: Int): String? {
-        if (number !in 1..2) {
-            return "Invalid player number, use 1 or 2"
+    fun playerWinsAPoint(player: Player): String? {
+        if (player !== playerOne && player !== playerTwo) {
+            throw IllegalArgumentException("Player is not part of this game.")
         }
 
-        val player: Player
-        val otherPlayer: Player
-        if (number == 1) {
-            player = playerOne
-            otherPlayer = playerTwo
-        } else {
-            player = playerTwo
-            otherPlayer = playerOne
-        }
+        val otherPlayer = if (player === playerOne) playerTwo else playerOne
 
         if (player.advantage) {
             player.won = true
