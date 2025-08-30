@@ -71,7 +71,7 @@ class Game(
     private fun playerWins(number: Int): String {
         playerOne.resetScore()
         playerTwo.resetScore()
-        return "Player $number wins the match! 🎉"
+        return "Player $number wins the match!"
     }
 
 
