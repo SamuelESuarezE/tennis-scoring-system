@@ -21,7 +21,7 @@ class Game(
         else "${playerOne.getScore()}-${playerTwo.getScore()}"
     }
 
-    fun playerWinsAPoint(player: Player): String? {
+    fun playerWinsAPoint(player: Player) {
         if (player !== playerOne && player !== playerTwo) {
             throw IllegalArgumentException("Player is not part of this game.")
         }
@@ -30,34 +30,32 @@ class Game(
 
         if (player.advantage) {
             player.won = true
-            return null
+            return
         }
 
         if (deuce) {
             player.advantage = true
             deuce = false
-            return null
+            return
         }
 
         if (otherPlayer.advantage) {
             deuce = true
             otherPlayer.advantage = false
-            return null
+            return
         }
 
         if (player.getScore() == 40) {
             player.won = true
-            return null
+            return
         }
 
         player.winsAPoint()
 
         if (player.getScore() == 40 && otherPlayer.getScore() == 40) {
             deuce = true
-            return null
+            return
         }
-
-        return null
     }
 
     private fun playerWins(number: Int): String {
