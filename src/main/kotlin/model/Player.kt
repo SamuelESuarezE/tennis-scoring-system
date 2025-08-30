@@ -6,6 +6,7 @@ class Player(
     var won: Boolean = false
 ) {
     fun winsAPoint() {
+        if (score == 40) return
         score += if (score == 30) 10 else 15
     }
 
