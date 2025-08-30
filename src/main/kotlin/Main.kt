@@ -1,3 +1,10 @@
+import model.Match
+import model.Player
+
 fun main() {
-    println("Hello World!")
+    val playerOne = Player("Samuel")
+    val playerTwo = Player("Matthew")
+    val match = Match(playerOne, playerTwo)
+    playerOne.winsAPoint()
+    match.displayScore()
 }
