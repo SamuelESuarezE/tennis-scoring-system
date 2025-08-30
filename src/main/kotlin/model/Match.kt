@@ -5,28 +5,25 @@ class Match(
     private val playerTwo: Player,
     private var deuce: Boolean = false
 ) {
-    fun displayScore() {
+    fun displayScore(): String {
 
         if (playerOne.won) {
-            playerWins(1)
-            return
+            return playerWins(1)
         }
 
         if (playerTwo.won) {
-            playerWins(2)
-            return
+            return playerWins(2)
         }
 
-        if (playerOne.advantage) println("Advantage Player 1")
-        else if (playerTwo.advantage) println("Advantage Player 2")
-        else if (deuce) println("Deuce")
-        else println("${playerOne.getScore()}-${playerTwo.getScore()}")
+        return if (playerOne.advantage) "Advantage Player 1"
+        else if (playerTwo.advantage) "Advantage Player 2"
+        else if (deuce) "Deuce"
+        else "${playerOne.getScore()}-${playerTwo.getScore()}"
     }
 
-    fun playerWinsAPoint(number: Int) {
+    fun playerWinsAPoint(number: Int): String? {
         if (number !in 1..2) {
-            println("Invalid player number, use 1 or 2")
-            return
+            return "Invalid player number, use 1 or 2"
         }
 
         val player: Player
@@ -41,38 +38,40 @@ class Match(
 
         if (player.advantage) {
             player.won = true
-            return
+            return null
         }
 
         if (deuce) {
             player.advantage = true
             deuce = false
-            return
+            return null
         }
 
         if (otherPlayer.advantage) {
             deuce = true
             otherPlayer.advantage = false
-            return
+            return null
         }
 
         if (player.getScore() == 40) {
             player.won = true
-            return
+            return null
         }
 
         player.winsAPoint()
 
         if (player.getScore() == 40 && otherPlayer.getScore() == 40) {
             deuce = true
-            return
+            return null
         }
+
+        return null
     }
 
-    private fun playerWins(number: Int) {
-        println("Player $number wins the match! 🎉")
+    private fun playerWins(number: Int): String {
         playerOne.resetScore()
         playerTwo.resetScore()
+        return "Player $number wins the match! 🎉"
     }
 
 
