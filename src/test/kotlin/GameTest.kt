@@ -35,4 +35,16 @@ class GameTest {
 
         assertEquals("Advantage Player 2", match.getScore(), "Expected score to be 'Advantage Player 2', but got '${match.getScore()}'")
     }
+
+    @Test
+    fun `given a player with advantage, when they lose the next point, then scores returns to Deuce`() {
+        val playerOne = Player()
+        val playerTwo = Player()
+        val match = Game(playerOne, playerTwo)
+        repeat(3) { match.playerWinsAPoint(1) }
+        repeat(4) { match.playerWinsAPoint(2) }
+        match.playerWinsAPoint(1)
+
+        assertEquals("Deuce", match.getScore(), "Expected score to be 'Deuce', but got '${match.getScore()}'")
+    }
 }
