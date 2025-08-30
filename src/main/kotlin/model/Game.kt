@@ -1,11 +1,11 @@
 package model
 
-class Match(
+class Game(
     private val playerOne: Player,
     private val playerTwo: Player,
     private var deuce: Boolean = false
 ) {
-    fun displayScore(): String {
+    fun getScore(): String {
 
         if (playerOne.won) {
             return playerWins(1)
