@@ -2,11 +2,11 @@ import model.Game
 import model.Player
 
 fun main() {
-    val playerOne = Player()
-    val playerTwo = Player()
+    val playerOne = Player("Matthew")
+    val playerTwo = Player("Sebastian")
     val game = Game(playerOne, playerTwo)
-    game.playerWinsAPoint(playerOne) // 15-0
-    game.playerWinsAPoint(playerTwo) // 15-15
-    repeat(3) { game.playerWinsAPoint(playerOne) } // 40-15
-    println(game.getScore()) // Player 1 wins the match!
+    game.scorePoint(playerOne) // 15-0
+    game.scorePoint(playerTwo) // 15-15
+    repeat(3) { game.scorePoint(playerOne) } // 40-15
+    println(game.getScore()) // Matthew wins the match!
 }

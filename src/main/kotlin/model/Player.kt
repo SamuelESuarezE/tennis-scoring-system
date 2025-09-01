@@ -1,10 +1,10 @@
 package model
 
 class Player(
-    private var score: Int = 0,
-    var advantage: Boolean = false,
-    var won: Boolean = false
+    var name: String,
 ) {
+    private var score: Int = 0
+
     fun winsAPoint() {
         if (score == 40) return
         score += if (score == 30) 10 else 15
@@ -14,7 +14,5 @@ class Player(
 
     fun resetScore() {
         score = 0
-        advantage = false
-        won = false
     }
 }

@@ -2,51 +2,54 @@ package model
 
 class Game(
     private val playerOne: Player,
-    private val playerTwo: Player,
-    private var deuce: Boolean = false
+    private val playerTwo: Player
 ) {
+
+    private var deuce: Boolean = false
+    private var advantage: Player? = null
+    private var winner: Player? = null
+
     fun getScore(): String {
-
-        if (playerOne.won) {
-            return playerWins(1)
+        if (winner != null) {
+            return playerWins(winner!!.name)
         }
 
-        if (playerTwo.won) {
-            return playerWins(2)
+        if (advantage != null) {
+            return "Advantage ${advantage!!.name}"
         }
 
-        return if (playerOne.advantage) "Advantage Player 1"
-        else if (playerTwo.advantage) "Advantage Player 2"
-        else if (deuce) "Deuce"
-        else "${playerOne.getScore()}-${playerTwo.getScore()}"
+        if (deuce) return "Deuce"
+
+        return "${playerOne.getScore()}-${playerTwo.getScore()}"
     }
 
-    fun playerWinsAPoint(player: Player) {
+    fun scorePoint(player: Player) {
         if (player !== playerOne && player !== playerTwo) {
             throw IllegalArgumentException("Player is not part of this game.")
         }
 
         val otherPlayer = if (player === playerOne) playerTwo else playerOne
 
-        if (player.advantage) {
-            player.won = true
-            return
-        }
-
         if (deuce) {
-            player.advantage = true
+            advantage = player
             deuce = false
             return
         }
 
-        if (otherPlayer.advantage) {
-            deuce = true
-            otherPlayer.advantage = false
-            return
+        when (advantage) {
+            player -> {
+                winner = player
+                return
+            }
+            otherPlayer -> {
+                deuce = true
+                advantage = null
+                return
+            }
         }
 
         if (player.getScore() == 40) {
-            player.won = true
+            winner = player
             return
         }
 
@@ -58,12 +61,11 @@ class Game(
         }
     }
 
-    private fun playerWins(number: Int): String {
+    private fun playerWins(name: String): String {
         playerOne.resetScore()
         playerTwo.resetScore()
-        return "Player $number wins the match!"
+        advantage = null
+        winner = null
+        return "$name wins the match!"
     }
-
-
-
 }
