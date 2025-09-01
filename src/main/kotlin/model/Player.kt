@@ -14,5 +14,7 @@ class Player(
 
     fun resetScore() {
         score = 0
+        advantage = false
+        won = false
     }
 }
