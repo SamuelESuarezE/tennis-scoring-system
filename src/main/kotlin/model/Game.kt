@@ -10,16 +10,9 @@ class Game(
     private var winner: Player? = null
 
     fun getScore(): String {
-        if (winner != null) {
-            return playerWins(winner!!.name)
-        }
-
-        if (advantage != null) {
-            return "Advantage ${advantage!!.name}"
-        }
-
+        winner?.let { return declareMatchWinner(it.name) }
+        advantage?.let { return "Advantage ${it.name}" }
         if (deuce) return "Deuce"
-
         return "${playerOne.getScore()}-${playerTwo.getScore()}"
     }
 
@@ -61,7 +54,7 @@ class Game(
         }
     }
 
-    private fun playerWins(name: String): String {
+    private fun declareMatchWinner(name: String): String {
         playerOne.resetScore()
         playerTwo.resetScore()
         advantage = null
